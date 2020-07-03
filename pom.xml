@@ -5,6 +5,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <!-- 引入spring boot方式1：通过继承父工程的方式 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.2.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.moon</groupId>
     <artifactId>java-technology-stack</artifactId>
@@ -13,4 +21,17 @@
     <name>${project.artifactId}</name>
     <description>一个用来学习与实战示例java编程相关技术栈的项目</description>
 
+    <modules>
+        <module>java-stack-lombok</module>
+        <module>java-stack-netty</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

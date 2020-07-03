@@ -1,0 +1,20 @@
+# 开发环境配置
+server:
+  port: 39998
+  servlet:
+    # 项目contextPath
+    context-path: /netty
+    tomcat:
+      # tomcat的URI编码
+      uri-encoding: UTF-8
+      # tomcat最大线程数，默认为200
+      max-threads: 800
+      # Tomcat启动初始化的线程数，默认值25
+      min-spare-threads: 30
+
+#showSql
+logging:
+  # 级别控制，例：logging.level.com.moon=DEBUG：com.moon包下所有class以DEBUG级别输出。
+  level:
+    com.moon.system.testmodule: debug
+
