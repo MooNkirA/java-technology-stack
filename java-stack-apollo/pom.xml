@@ -14,5 +14,22 @@
     <name>${project.artifactId}</name>
     <description>Apollo 配置中心使用示例项目</description>
 
+    <modules>
+        <module>apollo-quickstart</module>
+    </modules>
+
+    <properties>
+        <junit.version>4.13</junit.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
