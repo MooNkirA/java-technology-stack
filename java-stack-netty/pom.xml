@@ -12,7 +12,7 @@
     <artifactId>java-stack-netty</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
-    <description>netty框架学习工程</description>
+    <description>netty 框架学习工程</description>
 
     <properties>
         <lombok.version>1.18.10</lombok.version>

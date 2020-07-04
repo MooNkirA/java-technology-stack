@@ -24,6 +24,7 @@
     <modules>
         <module>java-stack-lombok</module>
         <module>java-stack-netty</module>
+        <module>java-stack-apollo</module>
     </modules>
 
     <build>
