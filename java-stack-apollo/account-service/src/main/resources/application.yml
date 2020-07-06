@@ -1,0 +1,13 @@
+server:
+  port: 63000
+
+# 定义读取 apollo 应用配置的id
+app:
+  id: account-service
+
+# 定义apollo相关必须配置
+apollo:
+  bootstrap:
+    enabled: true
+    # 定义读取配置的Namespace，中间以逗号分隔
+    namespaces: application,micro_service.spring-boot-http,spring-rocketmq,micro_service.spring-boot-druid
