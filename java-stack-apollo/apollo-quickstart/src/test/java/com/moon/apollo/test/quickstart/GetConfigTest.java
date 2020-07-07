@@ -38,9 +38,7 @@ public class GetConfigTest {
         System.out.println("sms.enable: " + value);
     }
 
-    /*
-     * 配置实时更新测试
-     */
+    /* 配置实时更新测试 */
     @Test
     public void hotPublishTest() throws InterruptedException {
         // 获取apollo配置对象
