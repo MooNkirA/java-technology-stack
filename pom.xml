@@ -26,6 +26,7 @@
         <module>java-stack-netty</module>
         <module>java-stack-apollo</module>
         <module>java-basic-api</module>
+        <module>java-stack-jvm</module>
     </modules>
 
     <build>
