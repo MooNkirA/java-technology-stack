@@ -7,6 +7,9 @@ import com.moon.jvm.model.Person;
  * <p> VM参数配置 </p>
  * -Xms30m -Xmx30m -XX:MaxMetaspaceSize=30m -XX:+UseConcMarkSweepGC -XX:-UseCompressedOops
  *
+ * <p> -XX:MaxMetaspaceSize 定义元空间的最大值 </p>
+ * <p> -XX:+UseConcMarkSweepGC -XX:-UseCompressedOops 指定垃圾回收器 </p>
+ *
  * @author MooNkirA
  * @version 1.0
  * @date 2020-7-26 17:01
