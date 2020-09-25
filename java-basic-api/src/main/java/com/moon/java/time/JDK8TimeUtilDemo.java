@@ -1,4 +1,4 @@
-package com.moon.java.basic.test;
+package com.moon.java.time;
 
 import org.junit.Test;
 
@@ -24,10 +24,10 @@ import java.util.Date;
  *
  * @author MooNkirA
  * @version 1.0
- * @date 2020-7-12 21:59
+ * @date 2020-9-24 23:20
  * @description
  */
-public class JDK8TimeUtilTest {
+public class JDK8TimeUtilDemo {
 
     /* Java 8中获取今天的日期、年、月、日信息 */
     @Test
@@ -298,6 +298,5 @@ public class JDK8TimeUtilTest {
         System.out.printf("字符串 '%s' 转LocalDate对象 '%s'%n", dateString, stringToLocalDate); // 字符串 '2020-08-01 14:13:12' 转LocalDate对象 '2020-08-01'
         System.out.printf("字符串 '%s' 转LocalDateTime对象 '%s'%n", dateString, stringToLocalDateTime); // 字符串 '2020-08-01 14:13:12' 转LocalDateTime对象 '2020-08-01T14:13:12'
     }
-
 
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
  * @date 2020-9-24 22:52
  * @description
  */
-public class LambdaDemo {
+public class LambdaDemo01Intro {
 
     /* 示例：当需要启动一个线程去完成任务时，通常会通过 `Runnable` 接口来定义任务内容，并使用 `Thread` 类来启动该线程。 */
     @Test
@@ -22,7 +22,7 @@ public class LambdaDemo {
          *      2.为了指定 run 的方法体，不得不需要 Runnable 接口的实现类
          *      3.为了省去定义一个 Runnable 实现类的麻烦，不得不使用匿名内部类
          *      4.必须覆盖重写抽象 run 方法，所以方法名称、方法参数、方法返回值不得不再写一遍，且不能写错
-         *      5.
+         *      5.实际上，似乎只有方法体才是关键所在。
          */
         new Thread(new Runnable() {
             @Override

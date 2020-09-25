@@ -1,4 +1,4 @@
-package com.moon.java.basic.test;
+package com.moon.java.common.test;
 
 import org.junit.Test;
 

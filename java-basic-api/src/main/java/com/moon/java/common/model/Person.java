@@ -1,4 +1,4 @@
-package com.moon.java.basic.model;
+package com.moon.java.common.model;
 
 import java.util.StringJoiner;
 
@@ -17,6 +17,12 @@ public class Person {
     private int height;
 
     public Person() {
+    }
+
+    public Person(String name, int age, int height) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
     }
 
     public String getName() {
