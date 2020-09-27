@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -241,6 +242,167 @@ public class Demo03StreamFunction {
         // 获取最小值
         Optional<Integer> min = list.stream().min(Integer::compareTo);
         System.out.println("最小值: " + min.get());
+    }
+
+    /* Stream流 - reduce方法示例测试 */
+    @Test
+    public void reduceTest() {
+        // 定义集合
+        List<Integer> list = Arrays.asList(4, 5, 3, 9);
+
+        /*
+         * T reduce(T identity, BinaryOperator<T> accumulator);
+         *  第1个参数identity：方法执行时初始值，首次执行的时候，会赋值给accumulator参数函数的第一个入参
+         *  第2个参数accumulator：流每次处理数据的逻辑
+         *
+         * 示例中reduce方法的执行流程：
+         *  第一次, 将默认值赋值给x, 取出集合第一元素赋值给y
+         *  第二次, 将上一次返回的结果赋值x, 取出集合第二元素赋值给y
+         *  第三次, 将上一次返回的结果赋值x, 取出集合第三元素赋值给y
+         *  第四次, 将上一次返回的结果赋值x, 取出集合第四元素赋值给y
+         */
+        // 使用reduce方法求和
+        int result = list.stream().reduce(0, (x, y) -> {
+            System.out.println("x = " + x + ", y = " + y);
+            return x + y;
+        });
+        System.out.println("result = " + result); // 21
+
+        // 使用reduce方法获取最大值
+        Integer max = list.stream().reduce(0, (x, y) -> x > y ? x : y);
+        System.out.println("max = " + max);
+
+        // 字符串连接，concat = "ABCD"
+        String concatString = Stream.of("A", "B", "C", "D").reduce("", String::concat);
+        System.out.println("concatString = " + concatString);
+
+        // 求最小值，minValue = -3.0
+        double minValue = Stream.of(-1.5, 1.0, -3.0, -2.0).reduce(Double.MAX_VALUE, Double::min);
+        System.out.println("minValue = " + minValue);
+
+        // 求和，sumValue = 11, 有起始值
+        int sumValue = Stream.of(1, 2, 3, 4).reduce(1, Integer::sum);
+        System.out.println("sumValue = " + sumValue);
+
+        // 求和，sumValue = 10, 无起始值
+        sumValue = Stream.of(1, 2, 3, 4).reduce(Integer::sum).get();
+        System.out.println("sumValue = " + sumValue);
+
+        // 过滤，字符串连接，concatString = "ace"
+        concatString = Stream.of("a", "B", "c", "D", "e", "F")
+                .filter(x -> x.compareTo("Z") > 0)
+                .reduce("", String::concat);
+        System.out.println("concatString = " + concatString);
+
+        //经过测试，当元素个数小于24时，并行时线程数等于元素个数，当大于等于24时，并行时线程数为16
+        List<Integer> testList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24);
+
+        Integer v = testList.stream().reduce((x1, x2) -> x1 + x2).get();
+        System.out.println(v);   // 300
+
+        // 可以使用方法引用简化lambda表达式。Integer类的static int sum(int a, int b)静态方法等价于(x1, x2) -> x1 + x2
+        Integer v1 = testList.stream().reduce(10, Integer::sum);
+        System.out.println(v1);  // 310
+
+        Integer v2 = testList.stream().reduce(0,
+                (x1, x2) -> {
+                    System.out.println("stream accumulator: x1:" + x1 + "  x2:" + x2);
+                    return x1 - x2;
+                },
+                (x1, x2) -> {
+                    System.out.println("stream combiner: x1:" + x1 + "  x2:" + x2);
+                    return x1 * x2;
+                });
+        System.out.println(v2); // -300
+
+        Integer v3 = testList.parallelStream().reduce(0,
+                (x1, x2) -> {
+                    System.out.println("parallelStream accumulator: x1:" + x1 + "  x2:" + x2);
+                    return x1 - x2;
+                },
+                (x1, x2) -> {
+                    System.out.println("parallelStream combiner: x1:" + x1 + "  x2:" + x2);
+                    return x1 * x2;
+                });
+        System.out.println(v3); // -775946240
+    }
+
+    /* Stream流 - map与reduce方法配合使用示例测试 */
+    @Test
+    public void mapAndReduceTest() {
+        // 准备测试的集合数据
+        List<Person> persons = Arrays.asList(
+                new Person("新垣结衣", 18),
+                new Person("夜神月", 16),
+                new Person("石原里美", 30),
+                new Person("L", 17)
+        );
+
+        /*
+         * 示例1：求出所有年龄的总和
+         *   1.得到所有的年龄
+         *   2.让年龄相加
+         */
+        Integer totalAge = persons.stream()
+                .map(p -> p.getAge())
+                .reduce(0, Integer::sum); // Integer类有sum方法，相当于(x, y) -> x + y
+        System.out.println("totalAge = " + totalAge);
+
+        /*
+         * 示例2：求出最大年龄
+         *  1.得到所有的年龄
+         *  2.获取最大的年龄
+         */
+        Integer maxAge = persons.stream()
+                .map(Person::getAge) // 使用方法引用简化lambda表达式，类名::引用成员方法 相当于 p -> p.getAge()
+                .reduce(0, Math::max); // Math类有max方法，相当于(a, b) -> (a >= b) ? a : b
+        System.out.println("maxAge = " + maxAge);
+
+        // 示例3：统计a出现的次数。实现思路：将要统计的元素转成数值1，其他元素转成0，然后将所有1相加即为元素出现的次数
+        //                         1    0    0    1    0    1
+        Integer count = Stream.of("a", "c", "b", "a", "b", "a")
+                .map(s -> {
+                    if ("a".equalsIgnoreCase(s)) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                })
+                .reduce(0, Integer::sum);
+        System.out.println("count = " + count);
+    }
+
+    /* Stream流 - mapToInt方法示例测试 */
+    @Test
+    public void mapToIntTest() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+
+        // 示例：把大于3的打印出来
+        // Integer占用的内存比int多,在Stream流操作中会自动装箱和拆箱
+        list.stream().filter(n -> n > 3)
+                .forEach(System.out::println);
+
+        /*
+         * IntStream mapToInt(ToIntFunction<? super T> mapper);
+         *  IntStream：内部操作的是int类型的数据，可以节省内存，减少自动装箱和拆箱的操作
+         */
+        // IntStream intStream = list.stream().mapToInt((Integer n) -> n.intValue());
+        IntStream intStream = list.stream().mapToInt(Integer::intValue); // 使用方法引用简化代码
+        intStream.filter(n -> n > 3).forEach(System.out::println);
+    }
+
+    /* Stream流 - concat方法示例测试 */
+    @Test
+    public void concatTest() {
+        Stream<String> streamA = Stream.of("夜神月", "L", "斩月");
+        Stream<String> streamB = Stream.of("石原里美", "新垣结衣");
+
+        // 合并成一个流
+        Stream<String> newStream = Stream.concat(streamA, streamB);
+        // 注意：合并流之后，之前的流都已关闭，如果再次操作会出现异常
+        // streamA.forEach(System.out::println);
+
+        newStream.forEach(System.out::println);
     }
 
 }

@@ -21,6 +21,14 @@ public class Person {
         System.out.println("执行Person类无参构造");
     }
 
+    public Person(String name) {
+        String temp = new StringJoiner(", ", "执行Person类有参构造" + "[", "]")
+                .add("name='" + name + "'")
+                .toString();
+        System.out.println(temp);
+        this.name = name;
+    }
+
     public Person(String name, int age) {
         String temp = new StringJoiner(", ", "执行Person类有参构造" + "[", "]")
                 .add("name='" + name + "'")
