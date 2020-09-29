@@ -8,16 +8,20 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.MonthDay;
 import java.time.Period;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
- * JDK 8的日期和时间类 LocalDate、LocalTime、LocalDateTime 的基础使用示例
+ * JDK 8的日期和时间类 LocalDate、LocalTime、LocalDateTime 等基础使用示例
  * <p>
  * Java 8 推出了全新的日期时间API。新API基于ISO标准日历系统，java.time包下的所有类都是不可变类型而且线程安全。
  * <p>
@@ -28,7 +32,7 @@ import java.util.Date;
  * @date 2020-9-28 15:09
  * @description
  */
-public class Demo01LocalDateTime {
+public class Demo01BasicApi {
 
     // ***************************************************
     //     LocalDate、LocalTime、LocalDateTime基础使用
@@ -55,7 +59,7 @@ public class Demo01LocalDateTime {
         System.out.println("day: " + now.getDayOfMonth());
     }
 
-    /* ocalTime: 表示时间，有时分秒的信息 */
+    /* LocalTime: 表示时间，有时分秒的信息 */
     @Test
     public void localTimeTest() {
         // 通过静态工厂方法LocalTime.of()获取指定时间对象
@@ -64,7 +68,7 @@ public class Demo01LocalDateTime {
 
         // 通过静态工厂方法LocalTime.now()获取当前时间
         LocalTime now = LocalTime.now();
-        System.out.println("当前时间: " + now);
+        System.out.println("当前的时间,不含有日期: " + now);
 
         System.out.println("hour: " + now.getHour()); // 获取时
         System.out.println("minute: " + now.getMinute()); // 获取分
@@ -107,6 +111,12 @@ public class Demo01LocalDateTime {
          * 增加或减去日期、时间
          *   plusXxxx: 增加指定的时间
          *   minusXxxx: 减去指定的时间
+         *   Temporal plus(long amountToAdd, TemporalUnit unit)：通过指定时间单位，增加时间
+         *   default Temporal minus(long amountToSubtract, TemporalUnit unit)：通过指定时间单位，减少时间
+         *
+         * 注1：Java 8除了不变类型和线程安全的好处之外，还提供如更好的plusHours()方法替换add()，并且是兼容的。
+         * 注2：这些方法返回一个全新的LocalTime实例，由于其不可变性，返回后一定要用变量赋值。
+         * 注3：LocalDate、LocalTime、LocalDateTime 均相同的api来操作日期时间
          */
         // 经过测试，增加指定时间后，如果日期出现跨天的话，日期也会增加
         System.out.println("当前时间：" + now + " ，加上2年：" + now.plusYears(2));
@@ -122,6 +132,36 @@ public class Demo01LocalDateTime {
         System.out.println("当前时间：" + now + " ，减去17小时：" + now.minusHours(17));
         System.out.println("当前时间：" + now + " ，减去20分钟：" + now.minusMinutes(20));
         System.out.println("当前时间：" + now + " ，减去30秒：" + now.minusSeconds(30));
+
+        // 创建LocalTime对象，只包含时间信息，没有日期。操作增加/减少小时、分、秒来计算的时间
+        LocalTime time = LocalTime.now();
+        System.out.println("获取当前的时间:" + time); // 23:30:22.677
+
+        LocalTime plusTime = time.plusHours(3);
+        System.out.println("3个小时后的时间为:" + plusTime); // 02:30:22.677
+
+        LocalTime minusTime = time.minusHours(2);
+        System.out.println("2个小时前的时间为:" + minusTime); // 21:30:22.677
+
+        // 创建LocalDate对象，只包含日期不包含时间信息。操作增加/减少小时、分、秒来计算的时间
+        LocalDate today = LocalDate.now();
+        System.out.println("今天的日期为:" + today); // 2020-07-12
+
+        // 通过使用LocalDate的plus()方法来增加天、周、月，ChronoUnit类声明了这些时间单位。
+        // 由于LocalDate也是不变类型，返回后一定要用变量赋值。
+        LocalDate plusDate = today.plus(1, ChronoUnit.WEEKS);
+        System.out.println("一周后的日期为:" + plusDate); //  2020-07-19
+
+        LocalDate minusDate = today.minus(3, ChronoUnit.DAYS);
+        System.out.println("3天前的日期为:" + minusDate); // 2020-07-09
+
+        LocalDate previousYear = today.minus(1, ChronoUnit.YEARS);
+        System.out.println("一年前的日期 : " + previousYear); // 2019-07-12
+
+        LocalDate nextYear = today.plus(1, ChronoUnit.YEARS);
+        System.out.println("一年后的日期:" + nextYear); // 2021-07-12
+
+        /* 注：可以用同样的方法增加（或减少）1个月、1年、1小时、1分钟甚至一个世纪 */
     }
 
     // ***************************************************
@@ -131,13 +171,23 @@ public class Demo01LocalDateTime {
     public void compareLocalDateTimeTest() {
         LocalDateTime dateTime = LocalDateTime.of(2018, 7, 12, 13, 28, 59);
         LocalDateTime now = LocalDateTime.now();
+        System.out.println("当前日期时间:" + now);
 
         // 日期对象a,b 调用 a.isAfter(b)，用于判断a日期是否在b日期之后
-        System.out.println(now.isAfter(dateTime)); // true
+        System.out.println(dateTime + "是否在当前日期之后: " + now.isAfter(dateTime)); // true
         // 日期对象a,b 调用 a.isBefore(b)，用于判断a日期是否在b日期之前
-        System.out.println(now.isBefore(dateTime)); // false
+        System.out.println(dateTime + "是否在当前日期之前: " + now.isBefore(dateTime)); // false
         // 日期对象a,b 调用 a.isEqual(b)，用于判断a日期是否在b日期相等
-        System.out.println(now.isEqual(dateTime)); //  false
+        System.out.println(dateTime + "是否与当前日期相等: " + now.isEqual(dateTime)); //  false
+        // 直接调用LocalDateTime对象的equals()方法也可以判断两个日期是否相等（LocalDate也有此API）
+        System.out.println("equals()方法，" + dateTime + "是否与当前日期相等: " + now.equals(dateTime)); //  false
+
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(1, ChronoUnit.DAYS);
+        System.out.println("当前日期:" + today);
+        System.out.println(yesterday + "是否在当前日期之后: " + yesterday.isBefore(today)); // true
+        System.out.println(yesterday + "是否在当前日期之前: " + yesterday.isAfter(today)); // false
+        System.out.println(yesterday + "是否与当前日期相等: " + yesterday.isEqual(today)); // false
     }
 
     // ************************************************************
@@ -145,31 +195,45 @@ public class Demo01LocalDateTime {
     // ************************************************************
     @Test
     public void parseAndFormatLocalDateTimeTest() {
-        // JDK8 日期的格式化对象是DateTimeFormatter
-        // 创建一个日期时间
+        // 日期字符串
+        String dayString = "20200714";
+        // 日期时间字符串
+        String dateTimeString = "2020年09月20日 15时16分16秒";
+        // 创建一个日期时间对象
         LocalDateTime now = LocalDateTime.now();
 
-        // 创建日期格式化对象，使用JDK自带的时间格式
-        DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        /* ==================== 日期对象转字符串测试 ==================== */
+        // 创建日期格式化对象，使用JDK自带的时间格式 （JDK8 日期的格式化对象是DateTimeFormatter）
+        DateTimeFormatter isoFormatter = DateTimeFormatter.BASIC_ISO_DATE;
         // 使用DateTimeFormatter类的静态ofPattern()方法，创建日期格式化对象，指定自定义格式
         DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH时mm分ss秒");
 
-        // 调用日期时间对象的format方法，按指定的格式将日期时间对象转成字符串
-        System.out.println("日期对象转成JDK自带ISO_LOCAL_DATE_TIME格式字符串：" + now.format(isoFormatter));
-        System.out.println("日期对象转成自定义格式字符串：" + now.format(customFormatter));
+        /*
+         * 调用日期时间对象的format方法，按指定的格式将日期时间对象转成字符串
+         *  public String format(DateTimeFormatter formatter)
+         */
+        System.out.printf("LocalDateTime对象 '%s' 转成JDK自带BASIC_ISO_DATE格式字符串：'%s'%n", now, now.format(isoFormatter));
+        System.out.printf("LocalDateTime对象 '%s' 转成自定义格式字符串：'%s'%n", now, now.format(customFormatter));
 
+        /* ==================== 字符串解析成日期对象测试 ==================== */
         /*
          * 日期时间解析：LocalDateTime类的parse静态方法，将日期时间字符串转成对象
+         *  parse(CharSequence text, DateTimeFormatter formatter)
+         *      作用：将字符串转成LocalDate日期对象
          *      text参数：待转换的日期时间字符串
-         *      formatter参数：日期格式化对象DateTimeFormatter，指定字符串相应的格式
+         *      formatter参数：日期格式化对象DateTimeFormatter，该格式器有一些静态属性为指定解析时日期的格式
          */
-        LocalDateTime parseDateTime = LocalDateTime.parse("2020年09月20日 15时16分16秒", customFormatter);
-        System.out.println("日期时间字符串转成对象：" + parseDateTime);
+        //
+        LocalDate dateFormatted = LocalDate.parse(dayString, isoFormatter);
+        System.out.printf("字符串 '%s' 格式化后的日期LocalDate类型为：%s%n", dayString, dateFormatted);
+
+        LocalDateTime parseDateTime = LocalDateTime.parse(dateTimeString, customFormatter);
+        System.out.printf("字符串 '%s' 格式化后的日期LocalDateTime类型为：%s%n", dateTimeString, parseDateTime);
 
         /* 测试多线程下，解析日期是否正常 */
         for (int i = 0; i < 50; i++) {
             new Thread(() ->
-                    System.out.println("多线程解析日期 = " + LocalDateTime.parse("2020年09月20日 15时16分16秒", customFormatter))
+                    System.out.println("多线程解析日期 = " + LocalDateTime.parse(dateTimeString, customFormatter))
             ).start();
         }
     }
@@ -334,4 +398,75 @@ public class Demo01LocalDateTime {
         System.out.println("Current date and time in a particular timezone : " + dateTimeInNewYork); // 2020-09-28T23:37:11.313-04:00[America/New_York]
     }
 
+    // ************************************************************
+    //               JDK8 其他日期时间操作API示例
+    // ************************************************************
+
+    /*
+     * Java 8中检查是否周期性日期事件
+     *  MonthDay对象：用于每年重复周期性事件，即月+日，如生日、节日等
+     *  YearMonth对象：用于，还可以用这个类得到当月共有多少天。
+     */
+    @Test
+    public void monthDayAndYearMonthTest() {
+        /* MonthDay对象测试部分 */
+        LocalDate now = LocalDate.now();
+        LocalDate date = LocalDate.of(2020, 7, 12);
+
+        // 通过静态工厂方法MonthDay.of(Month month, int dayOfMonth)，获取指定月与日的MonthDay对象
+        MonthDay birthday = MonthDay.of(date.getMonth(), date.getDayOfMonth());
+        // 通过静态方法MonthDay.from(TemporalAccessor temporal)，获取指定某年的的MonthDay对象
+        MonthDay currentMonthDay = MonthDay.from(now);
+
+        // 比较两个MonthDay对象
+        if (currentMonthDay.equals(birthday)) {
+            System.out.println("是你的生日");
+        } else {
+            System.out.println("你的生日还没有到");
+        }
+
+        /* YearMonth对象测试部分 */
+        YearMonth currentYearMonth = YearMonth.now();
+        System.out.printf("Days in month year %s: %d%n", currentYearMonth, currentYearMonth.lengthOfMonth()); // Days in month year 2020-07: 31
+        YearMonth creditCardExpiry = YearMonth.of(2020, Month.JULY);
+        System.out.printf("Your credit card expires on %s %n", creditCardExpiry); // Your credit card expires on 2020-07
+
+        // YearMonth实例的lengthOfMonth()方法可以返回当月的天数，在判断2月有28天还是29天时非常有用
+        YearMonth yearMonth = YearMonth.of(2020, Month.FEBRUARY);
+        if (yearMonth.lengthOfMonth() == 29) {
+            System.out.println(yearMonth.getYear() + "是闰年");
+        } else {
+            System.out.println(yearMonth.getYear() + "非闰年");
+        }
+    }
+
+    /* Java 8中检查是否闰年 */
+    @Test
+    public void isLeapYearTest() {
+        // 除了通过YearMonth实例的lengthOfMonth()返回的天数判断是否闰年，还可以使用LocalDate的isLeapYear()方法直接判断是否为闰年
+        LocalDate today = LocalDate.now();
+        if (today.isLeapYear()) {
+            System.out.printf("%d is Leap year", today.getYear());
+        } else {
+            System.out.printf("%d is not a Leap year", today.getYear());
+        }
+    }
+
+    /*
+     * Java 8的Clock时钟类
+     *      Java 8增加了一个 Clock 时钟类用于获取当时的时间戳，或当前时区下的日期时间信息。
+     *      JDK8以后，可以用 Clock 对象相应的方法替换 System.currentTimeInMillis() 和 TimeZone.getDefault() 。
+     */
+    @Test
+    public void clockTest() {
+        // Returns the current time based on your system clock and set to UTC.（根据您的系统时钟返回当前时间，并将其设置为UTC。）
+        Clock clock = Clock.systemUTC();
+        // 获取当前时间的毫秒值, 相关于JDK8以前的System.currentTimeInMillis()方法
+        System.out.println("Clock的millis()方法获取的毫秒值: " + clock.millis()); // 1594568628639
+        System.out.println("System.currentTimeInMillis()的毫秒值: " + clock.millis()); // 1594568628639
+
+        // Returns time based on system clock zone（根据系统时钟区域返回时间）
+        Clock defaultZoneClock = Clock.systemDefaultZone();
+        System.out.println("系统所在时钟区域的Clock的毫秒值: " + defaultZoneClock.millis()); // 1594568628711
+    }
 }
