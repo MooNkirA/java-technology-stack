@@ -12,7 +12,7 @@
     <description>JDK基础API使用</description>
 
     <properties>
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
