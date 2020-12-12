@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父工程的定义坐标信息 -->
+    <parent>
+        <groupId>com.moon</groupId>
+        <artifactId>06-maven-crm-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!-- 聚合项目坐标信息,因为组织名与父工程一样，可以省略 -->
+    <artifactId>06-maven-crm-main</artifactId>
+    <!-- 项目产生的构件类型 -->
+    <packaging>pom</packaging>
+    <name>${project.artifactId}</name>
+    <description>聚合项目。继承父项目，作用：聚合各个模块运行</description>
+    <!-- 由于父工程要聚合子工程，配置modules -->
+    <modules>
+        <!-- 在modules中配置相对路径，相对父工程pom.xml的路径找到子工程的pom.xml -->
+        <module>06-maven-crm-domain</module>
+        <module>06-maven-crm-dao</module>
+        <module>06-maven-crm-service</module>
+        <module>06-maven-crm-web</module>
+    </modules>
+</project>

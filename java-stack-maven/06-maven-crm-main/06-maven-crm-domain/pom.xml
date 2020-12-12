@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- 父工程的定义坐标信息 -->
+	<parent>
+		<groupId>com.moon</groupId>
+		<artifactId>06-maven-crm-main</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<!-- 子模块坐标信息 -->
+	<artifactId>06-maven-crm-domain</artifactId>
+	<name>${project.artifactId}</name>
+	<description>子模块项目-持久化对象模块</description>
+</project>
