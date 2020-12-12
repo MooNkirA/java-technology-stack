@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目名称，定义为组织名+项目名，类似包名 -->
+    <groupId>com.moon</groupId>
+    <!-- 模块名称 -->
+    <artifactId>01-maven-helloWorld</artifactId>
+    <!-- 当前项目版本号，snapshot 为快照版本即非正式版本，release 为正式发布版本 -->
+    <version>0.0.1-SNAPSHOT</version>
+    <!--
+        <packaging>：打包类型
+        jar：执行package会打成jar包
+        war：执行package会打成war包
+        pom ：用于maven工程的继承，通常父工程设置为 pom
+     -->
+    <packaging>war</packaging>
+
+    <!-- jdk编译版本1.5，在pom.xml中添加插件 -->
+    <!-- 添加项目jdk编译插件 -->
+    <build>
+        <plugins>
+            <!-- 设置编译版本为自己本机的版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 设置maven tomcat插件（maven默认是运行tomcat6，不支持jdk1.7+） -->
+            <!--
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>8080</port>
+                    <path>/testMaven</path>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <finalName>testMaven</finalName>
+                    <server>tomcat7</server>
+                </configuration>
+            </plugin>
+             -->
+        </plugins>
+    </build>
+
+    <!-- 在Dependencies视图添加后生成的内容 -->
+    <!-- 添加servlet-api，jsp-api -->
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 增加依赖，测试从私服下载组件 -->
+        <dependency>
+            <groupId>com.moon</groupId>
+            <artifactId>testtest</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

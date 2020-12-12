@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "hibernate-configuration-3.0.dtd" >
+<hibernate-configuration>
+	<!-- 配置会话工厂 -->
+	<session-factory>
+		<!-- 第2部分：配置hibernate可选常用属性 -->
+	  	<!-- 输出sql语句 -->
+	  	<property name="hibernate.show_sql">true</property>
+	  	<!-- 格式化sql语句 -->
+	  	<property name="hibernate.format_sql">true</property>
+	  	<!-- 配置此属性hibernate才会自动创建表 -->
+	  	<property name="hibernate.hbm2ddl.auto">update</property>
+	  	<!-- 数据库方言，根据数据库选择 -->
+	  	<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- 加载映射文件 -->
+		<mapping resource="com/moon/crm/entity/hbm/Customer.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

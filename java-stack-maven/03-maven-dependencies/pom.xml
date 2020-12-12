@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.moon</groupId>
+    <artifactId>03-maven-dependencies</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <!--锁定版本为 4.2.4 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>4.2.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>4.2.4.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- 创建普通的java的maven项目才可以 -->
+        <!-- <dependency>
+            <groupId>com.moon</groupId>
+            <artifactId>testtest</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency> -->
+
+        <!-- 2. 依赖冲突 -->
+        <!-- 2.1 两个直接依赖中，依赖了同一个坐标不同版本的组件，以配置顺序下方为主 -->
+        <!-- 可选依赖 -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <!-- 版本1.2.14 -->
+            <version>1.2.14</version>
+            <!-- 配置可选依赖：默认值为false，表示依赖会向下传递；如果设置为true，依赖不会向下传递 -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <!-- 版本1.2.12:两个直接依赖中,以后面声明者优先 -->
+            <version>1.2.12</version>
+        </dependency>
+
+        <!-- 2.2在直接依赖与间接依赖中依赖了了同一个坐标不同版本的组件，以直接依赖为主 -->
+        <!-- 当前组件对log4j间接依赖 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <!-- 直接依赖log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- 2.3 两个间接依赖中，依赖了同一个坐标不同版本的组件，以配置顺序上方为主 -->
+        <!-- struts2-spring-plugin依赖spirng-beans-3.0.5 -->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-spring-plugin</artifactId>
+            <version>2.3.24</version>
+        </dependency>
+        <!-- spring-context依赖spring-beans-4.2.4 -->
+        <!-- 这里可以不指定版本，因为上面已锁定版本 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- 配置JDK插件 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

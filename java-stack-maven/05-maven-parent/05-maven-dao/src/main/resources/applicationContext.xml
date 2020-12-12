@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+							http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 配置sessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 1. 引入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 2. 注入hibernate主配置文件 -->
+		<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+	</bean>	
+	
+	<!-- 配置数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 数据库连接4要素 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/day70_crm"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	
+	<!-- ********针对处理事务控制需求******** -->
+	<!-- 1、配置平台事务管理器(HibernateTransactionManager) -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<!-- 注入SessionFactory属性 -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+		<!-- 2、配置通知/增强:前提导入tx的约束 -->
+	<tx:advice id="myTX" transaction-manager="transactionManager">
+		<!-- 配置事务属性 -->
+		<tx:attributes>
+			<!-- 增删改开启事务 -->
+			<tx:method name="sava*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
+			<!-- 查询不开启事务 -->
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+			<!-- 匹配全部方法，上面增删改设置可以不需要 -->
+			<tx:method name="*" propagation="REQUIRED" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 3、配置切面:导入aop约束 -->
+	<aop:config>
+		<!-- 配置切入点 -->
+		<aop:pointcut expression="execution(* com.moon.crm.service.impl.*.*(..))" id="pt1"/>
+		<!-- 配置切面 -->
+		<aop:advisor advice-ref="myTX" pointcut-ref="pt1"/>
+	</aop:config>
+	
+</beans>

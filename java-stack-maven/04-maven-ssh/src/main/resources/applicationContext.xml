@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+							http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 配置action类,设置为单例 -->
+	<bean id="customerAction" class="com.moon.crm.action.CustomerAction" scope="prototype">
+		<!-- 注入属性 -->
+		<property name="customerService" ref="customerService"></property>
+	</bean>
+	
+	<!-- 配置service层实现类 -->
+	<bean id="customerService" class="com.moon.crm.service.impl.CustomerServiceImpl">
+		<!-- 注入属性 -->
+		<property name="customerDao" ref="customerDao"></property>
+	</bean>
+
+	<!-- 配置dao持久层实现类 -->
+	<bean id="customerDao" class="com.moon.crm.dao.impl.CustomerDaoImpl">
+		<!-- 注入属性 -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 配置sessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 1. 引入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 2. 注入hibernate主配置文件 -->
+		<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+	</bean>	
+
+	<!-- 配置数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 数据库连接4要素 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/day70_crm"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+</beans>

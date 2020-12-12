@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "struts-2.3.dtd" >
+<struts>
+	<!-- 配置相关常量 -->
+	<!-- 开发者模式 -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 字符集(此默认值：utf-8) -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<!-- 主题 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<!-- 扩展名(此默认值：action) -->
+	<constant name="struts.action.extension" value="action"></constant>
+
+	<!-- 设置通用package -->
+	<package name="customer" extends="struts-default" namespace="/">
+		<action name="queryCustomer" class="com.moon.CustomerAction" method="queryCustomer">
+			<!-- 设置返回字符串与路径关系 -->
+			<result name="success" type="dispatcher">/jsp/queryCutomer.jsp</result>
+		</action>
+	</package>
+</struts>
