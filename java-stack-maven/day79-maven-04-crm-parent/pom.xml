@@ -138,7 +138,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.9</version>
+			<version>4.13.1</version>
 			<!-- 配置测试有效的依赖范围 -->
 			<scope>test</scope>
 		</dependency>
