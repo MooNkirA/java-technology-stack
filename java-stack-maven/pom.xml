@@ -11,4 +11,13 @@
     <packaging>pom</packaging>
     <description>Maven 项目构建工具基础学习示例项目</description>
 
+    <modules>
+        <module>01-maven-helloWorld</module>
+        <module>02-maven-web</module>
+        <module>03-maven-dependencies</module>
+        <module>04-maven-ssh</module>
+        <module>05-maven-parent</module>
+        <module>06-maven-crm-parent</module>
+    </modules>
+
 </project>
