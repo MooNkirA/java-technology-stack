@@ -1,6 +1,6 @@
 package com.moon.java.common.test;
 
-import com.moon.java.basic.InitSequenceBean;
+import com.moon.common.model.InitSequenceBean;
 import org.junit.Test;
 
 /**

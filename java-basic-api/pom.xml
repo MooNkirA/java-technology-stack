@@ -9,7 +9,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>JDK基础API使用</description>
+    <description>
+        JDK（版本1.8）基础API使用示例项目。
+        具体的测试示例的包命名与jdk的包名尽量一致（可能有些存在在一点偏差）
+    </description>
 
     <properties>
         <junit.version>4.13</junit.version>
