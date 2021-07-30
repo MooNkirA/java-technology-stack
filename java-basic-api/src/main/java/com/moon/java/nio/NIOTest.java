@@ -1,6 +1,5 @@
-package com.moon.netty.test.nio;
+package com.moon.java.nio;
 
-import com.moon.netty.test.BaseTest;
 import org.junit.Test;
 
 import java.io.File;
@@ -10,18 +9,18 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * nio 测试
+ * NIO 基础 API 使用测试
  *
- * @author MoonZero
+ * @author MooNkirA
  * @version 1.0
- * @date 2019-10-3 08:35
+ * @date 2021-06-14 21:45
  * @description
  */
-public class TestNIO extends BaseTest {
+public class NIOTest {
 
     /* 往本地文件中写数据 */
     @Test
-    public void test1() throws Exception {
+    public void testWrite() throws Exception {
         // 1. 创建输出流
         FileOutputStream fileOutputStream = new FileOutputStream("E:\\00-Downloads\\moon.txt");
         // 2. 从流中得到一个通道
@@ -41,7 +40,7 @@ public class TestNIO extends BaseTest {
 
     /* 从本地文件中读取数据 */
     @Test
-    public void test2() throws Exception {
+    public void testRead() throws Exception {
         File file = new File("E:\\00-Downloads\\moon.txt");
         // 1. 创建输入流
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -56,13 +55,14 @@ public class TestNIO extends BaseTest {
         fileInputStream.close();
     }
 
-    /* 使用NIO实现文件复制 */
+    /* 实现文件复制 */
     @Test
-    public void test3() throws Exception {
+    public void testCopy() throws Exception {
         // 1. 创建两个流
         FileInputStream fileInputStream = new FileInputStream("E:\\00-Downloads\\moon.txt");
         FileOutputStream fileOutputStream = new FileOutputStream("E:\\00-Downloads\\moon_copy.txt");
 
+        /*----------- 使用NIO实现文件复制 -----------*/
         // 2. 得到两个通道
         FileChannel fileInChannel = fileInputStream.getChannel();
         FileChannel fileOutChannel = fileOutputStream.getChannel();
@@ -70,26 +70,15 @@ public class TestNIO extends BaseTest {
         // 3. 复制
         fileOutChannel.transferFrom(fileInChannel, 0, fileInChannel.size());
 
-        // 4. 关闭
-        fileInputStream.close();
-        fileOutputStream.close();
-    }
-
-    /* 使用BIO实现文件复制 */
-    @Test
-    public void testBioCopy() throws Exception {
-        // 1. 创建两个流
-        FileInputStream fileInputStream = new FileInputStream("E:\\00-Downloads\\moon.txt");
-        FileOutputStream fileOutputStream = new FileOutputStream("E:\\00-Downloads\\moon_copy.txt");
-
+        /*----------- 使用BIO实现文件复制 -----------*/
         // 2. 定义字节数组，使用一次读取数组方式复制文件
-        byte[] bytes = new byte[1024];
+        /*byte[] bytes = new byte[1024];
         int len;
         while ((len = fileInputStream.read(bytes)) != -1) {
             fileOutputStream.write(bytes, 0, len);
-        }
+        }*/
 
-        // 3. 关闭资源
+        // 4. 关闭
         fileInputStream.close();
         fileOutputStream.close();
     }

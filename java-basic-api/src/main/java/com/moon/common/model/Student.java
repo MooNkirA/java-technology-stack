@@ -16,6 +16,7 @@ public class Student {
     private String name;
     private int age;
     private int socre;
+    public String publicField; // public的属性，用于测试
 
     public Student() {
     }
@@ -24,6 +25,13 @@ public class Student {
         this.name = name;
         this.age = age;
         this.socre = socre;
+    }
+
+    public Student(String name, int age, int socre, String publicField) {
+        this.name = name;
+        this.age = age;
+        this.socre = socre;
+        this.publicField = publicField;
     }
 
     @Override
@@ -71,6 +79,7 @@ public class Student {
                 .add("name='" + name + "'")
                 .add("age=" + age)
                 .add("socre=" + socre)
+                .add("publicField='" + publicField + "'")
                 .toString();
     }
 }
