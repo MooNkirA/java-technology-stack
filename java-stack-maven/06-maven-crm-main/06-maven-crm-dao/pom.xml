@@ -6,7 +6,6 @@
 		<groupId>com.moon</groupId>
 		<artifactId>06-maven-crm-main</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
 	</parent>
 	<!-- 子模块坐标信息 -->
 	<artifactId>06-maven-crm-dao</artifactId>
