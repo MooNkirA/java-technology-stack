@@ -12,6 +12,7 @@
 
     <modules>
         <module>singleton-pattern</module>
+        <module>template-method-pattern</module>
     </modules>
 
 </project>
