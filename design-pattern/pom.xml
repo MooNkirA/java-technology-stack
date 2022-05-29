@@ -13,6 +13,8 @@
     <modules>
         <module>singleton-pattern</module>
         <module>template-method-pattern</module>
+        <module>adapter-pattern</module>
+        <module>chain-responsibility-pattern</module>
     </modules>
 
 </project>
