@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--
+        配置集中管理属性，适合用于配置文件中多处出现相关的配置值。引用格式：${name}
+        这里是配置日志输出的格式，配置格式说明：
+            %-5level                    日志级别，-5 代表从左显示5个字符宽度
+            %d{yyyy-MM-dd HH:mm:ss.SSS} 日期
+            %c                          类的完整名称
+            %M                          当前日志的名称
+            %L                          当前日志所在源码的行号
+            %thread                     线程名称
+            %m 或 %msg                  日志的内容
+            %n                          换行
+    -->
+    <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L [%thread] %m%n"/>
+    <!-- 定义日志文件保存路径属性 -->
+    <property name="log_dir" value="E:/logs"/>
+
+    <!--
+        Appender: 设置日志信息的输出位置，常用的有以下几个
+            - ch.qos.logback.core.ConsoleAppender (控制台)
+            - ch.qos.logback.core.rolling.RollingFileAppender (文件大小到达指定大小的时候产生一个新文件)
+            - ch.qos.logback.core.FileAppender (文件)
+    -->
+    <!-- 控制台日志输出的 appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 控制输出流对象，默认是 System.out，这里改为 System.err -->
+        <target>System.err</target>
+        <!-- 日志消息格式配置 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志文件输出的 appender -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <!-- 日志文件保存路径 -->
+        <file>${log_dir}/logback.log</file>
+        <!-- 日志消息格式配置 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- html 格式日志文件输出 appender -->
+    <appender name="htmlFile" class="ch.qos.logback.core.FileAppender">
+        <!-- 日志文件保存路径 -->
+        <file>${log_dir}/logback.html</file>
+        <!-- html 消息格式配置 -->
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%-5level%d{yyyy-MM-dd HH:mm:ss.SSS}%c%M%L%thread%m</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!--日志拆分和归档压缩的 appender 对象-->
+    <appender name="rollFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件保存路径-->
+        <file>${log_dir}/roll_logback.log</file>
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L [%thread] %m%n</pattern>
+        </encoder>
+        <!--指定拆分规则-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按照时间和压缩格式声明拆分的文件名-->
+            <fileNamePattern>${log_dir}/rolling.%d{yyyy-MM-dd}.log%i.gz</fileNamePattern>
+            <!--按照文件大小拆分-->
+            <maxFileSize>1MB</maxFileSize>
+        </rollingPolicy>
+        <!-- 日志级别过滤器 filter -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 设置日志过滤规则 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 异步日志 -->
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 指定某个具体的 appender -->
+        <appender-ref ref="rollFile"/>
+    </appender>
+
+    <!--
+        root logger 配置（必须配置），它是根 logger 对象。默认日志级别是 debug
+            level 属性：用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF
+        <root> 可以包含零个或多个 <appender-ref> 元素，标识这个appender将会添加到这个 logger。
+    -->
+    <root level="ALL">
+        <!-- 配置控制台输出 -->
+        <appender-ref ref="console"/>
+    </root>
+
+    <!--
+        自定义 looger 对象，仅有一个name属性，一个可选的level和一个可选的addtivity属性
+            name 属性：用来指定受此 logger 约束的某一个包或者具体的某一个类。
+            level 属性：用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，
+                        如果未设置此属性，那么当前logger将会继承上级的级别。
+            additivity 属性：设置是否继承上级 loger 传递打印信息。默认是true。
+        <logger> 可以包含零个或多个 <appender-ref> 元素，标识这个 appender 将会添加到这个 logger
+    -->
+    <logger name="com.moon.log" level="info" additivity="false">
+        <appender-ref ref="console"/>
+        <!--<appender-ref ref="file"/>
+        <appender-ref ref="htmlFile"/>-->
+        <appender-ref ref="rollFile"/>
+    </logger>
+
+</configuration>

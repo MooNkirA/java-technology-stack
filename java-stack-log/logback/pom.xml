@@ -13,12 +13,7 @@
     <description>Logback 日志框架使用示例</description>
 
     <dependencies>
-        <!-- slf4j 日志门面 -->
-        <!--<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>-->
-        <!-- logback 日志实现 -->
+        <!-- logback 日志实现，会引入 slf4j-api 和 logback-core 的依赖 -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

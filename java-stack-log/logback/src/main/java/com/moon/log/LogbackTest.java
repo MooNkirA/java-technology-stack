@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @description
  */
 public class LogbackTest {
-
+    // 创建日志记录对象
     public static final Logger LOGGER = LoggerFactory.getLogger(LogbackTest.class);
 
     // 基础使用测试
