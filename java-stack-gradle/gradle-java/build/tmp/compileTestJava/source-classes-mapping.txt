@@ -1,0 +1,2 @@
+com/moon/gradle/test/DemoTest.java
+ com.moon.gradle.test.DemoTest

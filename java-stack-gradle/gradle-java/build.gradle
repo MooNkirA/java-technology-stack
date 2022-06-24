@@ -1,0 +1,57 @@
+// 定义扩展属性(给脚本用的脚本)
+//buildScript {
+//    repositories {
+//        mavenCentral()
+//    }
+//}
+
+// 应用插件，这里引入了 Gradle 的 Java 插件,此插件提供了 Java 构建和测试所需的一切
+plugins {
+    id 'java'
+}
+
+// 定义项目属性(可选)
+group 'com.moon'
+version '1.0-SNAPSHOT'
+
+/*
+ * 指定 gradle 项目使用的仓库
+ * 以下配置表示，先从本地仓库寻找依赖，如果没有再从中仓库下载
+ * 如果只配置中央仓库，表示直接从中央仓库下载jar包。但是如果指定下载的位置已经有了，就不会再次下载了。
+ */
+repositories {
+    // 添加 maven 本地仓库
+    mavenLocal()
+    // 添加 maven 远程中央仓库
+    mavenCentral()
+}
+
+/*
+ * 项目所有 jar 包的依赖在 dependencies 中定义
+ * 每一个 jar 包的坐标都有三个基本元素组成（group，name，version）
+ * 添加依赖坐标时，需要声明 jar 包的作用域，如：compile、runtime、testCompile、testRuntime
+ */
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    // 方式1: 通过 map 结构来描述依赖。分别是 group，name，version
+    // compile group: 'org.springframework', name: 'spring-context', version: '5.3.19'
+    // 方式2: 通过字符串简写方式描述依赖，组成结构是：'group:name:version:classifier@extension'，如版本号使用“+”加号代表了最新版本
+    compile 'org.springframework:spring-context:5.3.19'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// 自定义任务(可选)。此处是配置项目编译的编码方式
+tasks.withType(JavaCompile) {
+    options.encoding = "utf-8"
+}
+
+// 定义扩展属性(可选)
+ext {
+    foo = "foo"
+}
+// 定义局部变量(可选)
+def bar = "bar"
