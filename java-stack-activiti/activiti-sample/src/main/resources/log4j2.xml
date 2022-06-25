@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Configuration 根标签
+    status 属性：设置日志框架本身的输出日志级别，默认是 warn
+    monitorInterval 属性：设置自动加载配置文件的间隔时间，不低于 5 秒
+-->
+<Configuration status="warn" monitorInterval="10">
+
+    <properties>
+        <property name="LOG_HOME">E:/logs</property>
+    </properties>
+
+    <!-- 日志处理对象 appender -->
+    <Appenders>
+        <!-- 控制台输出 appender -->
+        <Console name="Console" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [%-5level] %c{36}:%L --- %m%n"/>
+        </Console>
+
+        <!-- 日志文件输出 appender -->
+        <File name="file" fileName="${LOG_HOME}/activiti-log.log">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] %l %c{36} - %m%n"/>
+        </File>
+    </Appenders>
+
+    <!-- logger 定义 -->
+    <Loggers>
+        <!-- 使用 rootLogger 配置，指定日志级别 info，修改为更高的日志级别，可以查看数据库表创建语句 -->
+        <Root level="trace">
+            <!-- 指定日志使用的处理器 -->
+            <AppenderRef ref="Console"/>
+        </Root>
+
+        <!-- 自定义 logger 对象 -->
+        <Logger name="com.moon.activiti" level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="file"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
