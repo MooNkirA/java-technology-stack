@@ -125,10 +125,10 @@ public class ActivitiTest {
     }
 
     /**
-     * 完成个人任务
+     * 完成个人任务(根据流程定义key查询任务)
      */
     @Test
-    public void testCompletTask() {
+    public void testCompletTaskByProcessDefinitionKey() {
         // 1、创建 ProcessEngine 流程引擎
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         // 2、获取 TaskService 任务管理类
@@ -140,6 +140,30 @@ public class ActivitiTest {
                 .singleResult();
         // 4、根据任务id，完成任务
         taskService.complete(task.getId());
+    }
+
+    /**
+     * 完成个人任务(根据任务id查询任务)
+     */
+    @Test
+    public void testCompletTaskByTaskId() {
+        // 1、创建 ProcessEngine 流程引擎
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+        // 2、获取 TaskService 任务管理类
+        TaskService taskService = processEngine.getTaskService();
+        /*
+         * 3、查询任务。完成任务前，需要校验该负责人可以完成当前任务
+         *  校验方法：根据任务id和任务负责人查询当前任务，如果查到该用户有权限，就完成
+         */
+        Task task = taskService.createTaskQuery()
+                .taskId("22505") // 任务ID
+                .taskAssignee("Sam") // 只查询该任务负责人的任务
+                .singleResult();
+        // 4、根据任务id，完成任务
+        if (task != null) {
+            taskService.complete(task.getId());
+            System.out.println("完成任务");
+        }
     }
 
     /**

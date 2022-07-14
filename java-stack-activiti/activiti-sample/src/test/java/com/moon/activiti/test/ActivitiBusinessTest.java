@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2022-07-12 14:15
  * @description
  */
-public class ActivitiBusinessDemo {
+public class ActivitiBusinessTest {
 
     /**
      * 添加业务 key 到 Activiti 的 act_ru_execution 表
@@ -63,6 +63,36 @@ public class ActivitiBusinessDemo {
             System.out.println("是否执行完成：" + processInstance.isEnded());
             System.out.println("是否暂停：" + processInstance.isSuspended());
             System.out.println("当前活动标识：" + processInstance.getActivityId());
+        }
+    }
+
+    /**
+     * 查询负责人所有任务，根据任务获取流程实例id，再查询到关联的 businessKey
+     */
+    @Test
+    public void testQueryProcessInstanceByBusinessKey() {
+        // 1、创建 ProcessEngine 流程引擎
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+        // 2、获取 RuntimeService 流程运行管理类
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        // 获取 TaskService 任务管理类
+        TaskService taskService = processEngine.getTaskService();
+        // 3、查询流程定义key和任务负责人查询任务对象
+        List<Task> tasks = taskService.createTaskQuery()
+                .processDefinitionKey("myEvection")
+                .taskAssignee("Sam")
+                // .singleResult();
+                .list();// 因为之前测试的原因，数据库有多条记录，如果只有一条记录，可用 singleResult
+
+        // 4、通过 task 对象获取实例id
+        for (Task task : tasks) {
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                    .processInstanceId(task.getProcessInstanceId())
+                    .singleResult();
+            // 5、通过流程实例 ProcessInstance，得到关联的 businessKey
+            String businessKey = processInstance.getBusinessKey();
+            // 以下可以做相关的业务处理
+            System.out.println("businessKey == " + businessKey);
         }
     }
 
