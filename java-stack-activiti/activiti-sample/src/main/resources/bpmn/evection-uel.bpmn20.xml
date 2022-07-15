@@ -9,7 +9,7 @@
     <userTask id="sid-892b0f74-7ae0-4ab4-bc5e-b1c4f1e50d4b" name="总经理审批" activiti:assignee="${assignee2}"/>
     <userTask id="sid-0c51d2e0-8ca7-4f76-bee0-c2a62c82952d" name="账务审批" activiti:assignee="${assignee3}"/>
     <sequenceFlow id="sid-8542deff-7398-4220-9bd8-ed8384e7b909" sourceRef="sid-b49842e7-641a-4fbd-9aa5-fbf1f4bac6d9" targetRef="sid-c389d424-c7e6-4370-b2d3-717056b67e79"/>
-    <sequenceFlow id="sid-7f598b91-3c2c-48e4-a113-301f1b36404b" sourceRef="sid-c389d424-c7e6-4370-b2d3-717056b67e79" targetRef="sid-892b0f74-7ae0-4ab4-bc5e-b1c4f1e50d4b"/>
+    <sequenceFlow id="sid-7f598b91-3c2c-48e4-a113-301f1b36404b" sourceRef="sid-c389d424-c7e6-4370-b2d3-717056b67e79" targetRef="myEvection-uel"/>
     <sequenceFlow id="sid-9d97edeb-4a55-48d6-b434-231e3fa09ace" sourceRef="sid-892b0f74-7ae0-4ab4-bc5e-b1c4f1e50d4b" targetRef="sid-0c51d2e0-8ca7-4f76-bee0-c2a62c82952d"/>
     <sequenceFlow id="sid-65265df4-7224-4af0-bda5-ade6f6e64442" sourceRef="sid-0c51d2e0-8ca7-4f76-bee0-c2a62c82952d" targetRef="sid-527d61b3-7b7b-4d45-ab02-c52f1bb8e295"/>
   </process>

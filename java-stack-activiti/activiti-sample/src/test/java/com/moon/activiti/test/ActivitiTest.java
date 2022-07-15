@@ -210,12 +210,12 @@ public class ActivitiTest {
         // 2、获取 Repositoryservice 资源管理类
         RepositoryService repositoryService = processEngine.getRepositoryService();
         // 3、通过查询来获取部署id（此处省略，参考上面的查询示例）
-        String deploymentId = "12501";
+        String deploymentId = "117501";
         // 4、删除流程部署。值得注意：如果该流程部署已有流程实例启动则删除时会报错
-        repositoryService.deleteDeployment(deploymentId);
+        // repositoryService.deleteDeployment(deploymentId);
         // 方法第二个参数用于设置是否级联删除流程部署，设置 true 则表示级联删除，否则设置为 false
         // 级联删除意味着该流程即使有流程实例启动也可以删除
-        // repositoryService.deleteDeployment(deploymentId, true);
+        repositoryService.deleteDeployment(deploymentId, true);
     }
 
     /**
