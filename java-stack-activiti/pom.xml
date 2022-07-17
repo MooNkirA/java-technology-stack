@@ -7,13 +7,15 @@
     <groupId>com.moon</groupId>
     <artifactId>java-stack-activiti</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>activiti-sample</module>
-        <module>activiti-spring</module>
-    </modules>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <description>Activiti 7 使用示例工程</description>
+
+    <modules>
+        <module>activiti-sample</module>
+        <module>activiti-spring</module>
+        <module>activiti-spring-boot</module>
+    </modules>
 
     <!-- 依赖版本号定义 -->
     <properties>
@@ -75,6 +77,13 @@
                 <artifactId>activiti-cloud-services-api</artifactId>
                 <version>${activiti.version}</version>
             </dependency>-->
+
+            <!-- SpringBoot 整合 Activiti7 的核心依赖 -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
 
             <!-- mysql驱动 -->
             <dependency>
