@@ -1,0 +1,19 @@
+allprojects {
+    apply plugin: 'java'
+
+    group 'com.moon'
+    version '1.0-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.springframework', name: 'spring-webmvc', version: '5.3.19'
+        compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+        compile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+    }
+}

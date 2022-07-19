@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置数据源，使用阿里druid数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" primary="true">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/activiti_sample?useSSL=false"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!--
+        配置 processEngine Activiti 的流程引擎
+        注意：在默认方式下 bean 的 id 必须为 processEngineConfiguration
+        org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration 是默认实现
+    -->
+    <bean id="processEngineConfiguration"
+          class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+        <!-- 方式1：直接配置数据库相关的信息 -->
+        <!--数据库驱动-->
+        <!--<property name="jdbcDriver" value="com.mysql.cj.jdbc.Driver"/>-->
+        <!--数据库链接-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/activiti_sample?useSSL=false"/>-->
+        <!--数据库用户名-->
+        <!--<property name="jdbcUsername" value="root"/>-->
+        <!--数据库密码-->
+        <!--<property name="jdbcPassword" value="123456"/>-->
+
+        <!-- 方式2：引用单独配置的数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--
+            配置 activiti 数据库表在生成时的策略。
+            databaseSchemaUpdate 属性为 true，代表如果数据库中已经存在相应的表，则直接使用；如果不存在，则会创建
+        -->
+        <property name="databaseSchemaUpdate" value="true"/>
+    </bean>
+</beans>

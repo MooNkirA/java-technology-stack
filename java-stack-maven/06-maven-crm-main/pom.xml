@@ -5,6 +5,7 @@
         <groupId>com.moon</groupId>
         <artifactId>06-maven-crm-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../06-maven-crm-parent/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
