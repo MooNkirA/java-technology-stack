@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 通过 included 标签可以定义待导入的内容 -->
+<included>
+    <contextName>logback</contextName>
+</included>
