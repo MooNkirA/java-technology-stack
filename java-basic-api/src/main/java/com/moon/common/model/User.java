@@ -1,5 +1,8 @@
 package com.moon.common.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.StringJoiner;
 
 /**
@@ -45,5 +48,10 @@ public class User {
                 .add("userName='" + userName + "'")
                 .add("age=" + age)
                 .toString();
+    }
+
+    public static void main(String[] args) {
+        ArrayList<User> objects = new ArrayList<>();
+        Collections.sort(objects, (o1, o2) -> 0);
     }
 }

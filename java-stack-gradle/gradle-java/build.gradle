@@ -37,7 +37,8 @@ dependencies {
     // 方式1: 通过 map 结构来描述依赖。分别是 group，name，version
     // compile group: 'org.springframework', name: 'spring-context', version: '5.3.19'
     // 方式2: 通过字符串简写方式描述依赖，组成结构是：'group:name:version:classifier@extension'，如版本号使用“+”加号代表了最新版本
-    compile 'org.springframework:spring-context:5.3.19'
+    // 注意：compile 语句已弃用，并已在 Gradle 7.0 中删除。后面版本改用 implementation 或 api
+    implementation 'org.springframework:spring-context:5.3.19'
 }
 
 test {
