@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- include 标签用于引入其他配置文件 -->
+    <include resource="logback-base.xml"/>
 
     <!--
         配置集中管理属性，适合用于配置文件中多处出现相关的配置值。引用格式：${name}
@@ -16,6 +18,13 @@
     <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L [%thread] %m%n"/>
     <!-- 定义日志文件保存路径属性 -->
     <property name="log_dir" value="E:/logs"/>
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr"
+                    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
     <!--
         Appender: 设置日志信息的输出位置，常用的有以下几个
@@ -103,7 +112,7 @@
             additivity 属性：设置是否继承上级 loger 传递打印信息。默认是true。
         <logger> 可以包含零个或多个 <appender-ref> 元素，标识这个 appender 将会添加到这个 logger
     -->
-    <logger name="com.moon.log" level="info" additivity="false">
+    <logger name="com.moon.log" level="debug" additivity="false">
         <appender-ref ref="console"/>
         <!--<appender-ref ref="file"/>
         <appender-ref ref="htmlFile"/>-->

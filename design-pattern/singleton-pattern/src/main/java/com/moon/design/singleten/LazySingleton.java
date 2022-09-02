@@ -11,8 +11,8 @@ package com.moon.design.singleten;
  */
 public class LazySingleton {
 
-    // 定义一个静态的对象成员变量
-    private static LazySingleton instance;
+    // 定义一个静态的对象成员变量。注意：采用 volatile 关键字修饰也是很有必要
+    private static volatile LazySingleton instance;
 
     // 要私有构造方法，如果不处理，系统会自动提供一个无参的构造方法。
     private LazySingleton() {
