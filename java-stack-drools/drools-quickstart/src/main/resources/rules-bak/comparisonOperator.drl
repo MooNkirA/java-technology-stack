@@ -51,4 +51,3 @@ rule "rule_comparison_not matches"
     then
         System.out.println("规则：rule_comparison_not matches触发了...");
 end
-

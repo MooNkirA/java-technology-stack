@@ -1,0 +1,29 @@
+// 当前规则文件用于测试 global 全局变量
+package testglobal
+import com.moon.drools.entity.Student
+
+global java.lang.Integer count // 定义一个包装类型的全局变量
+global java.util.List globalList // 定义一个集合类型的全局变量
+global Student globalStudent // 定义一个JavaBean类型的全局变量
+
+rule "rule_global_1"
+    when
+    then
+        count += 10; // 对于包装类型的全局变量的修改只针对当前规则生效
+        System.out.println("规则：rule_global_1触发了...");
+        System.out.println("全局变量count计算之后的值为：" + count);
+
+        globalList.add("MooN"); // 修改集合类型的全局变量
+        System.out.println("全局变量globalList的size：" + globalList.size());
+        globalStudent.setName("MooNZero");  // 修改 JavaBean 全局变量中的属性
+        System.out.println("++++++++++ 规则：rule_global_1 修改变量完成 ++++++++++");
+end
+
+rule "rule_global_2"
+    when
+    then
+        System.out.println("规则：rule_global_2触发了...");
+        System.out.println("全局变量的值为：" + count);
+        System.out.println("全局变量globalList的size：" + globalList.size());
+        System.out.println("全局变量globalStudent的name属性：" + globalStudent.getName());
+end

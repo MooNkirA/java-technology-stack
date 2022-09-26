@@ -1,0 +1,13 @@
+// 当前规则文件用于测试query查询
+package testquery
+import com.moon.drools.entity.Student
+
+// 定义一个不带参数的 Query 查询，可以到工作内存中查询符合条件的Fact对象
+query "rule_query_1"
+    $s:Student(age > 10)
+end
+
+// 定义一个带有参数的 Query 查询，可以到工作内存中查询符合条件的Fact对象
+query "rule_query_2"(String sname)
+    $s:Student(age > 5 && name == sname)
+end

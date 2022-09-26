@@ -1,0 +1,19 @@
+// 当前规则文件用于测试LHS部分---in not in
+package testlhs
+import com.moon.drools.entity.Student
+
+// 编写规则，演示in关键字用法
+rule "rule_lhs_1"
+    when
+        $s:Student(name in ("MooNkirA","L","Zero"))
+    then
+        System.out.println("规则：rule_lhs_1触发了...");
+end
+
+// 编写规则，演示 not in 关键字用法
+rule "rule_lhs_2"
+    when
+        $s:Student(name not in ("MooNkirA","L"))
+    then
+        System.out.println("规则：rule_lhs_2触发了...");
+end
