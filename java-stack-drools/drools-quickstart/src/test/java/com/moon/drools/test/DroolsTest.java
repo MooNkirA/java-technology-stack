@@ -483,4 +483,60 @@ public class DroolsTest {
         session.dispose();
     }
 
+    // 测试 LHS 部分进阶条件元素 eval --> 对应的规则文件是 lhs-eval.drl
+    @Test
+    public void test21() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
+
+    // 测试 LHS 部分进阶条件元素 not --> 对应的规则文件是 lhs-not.drl
+    @Test
+    public void test22() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+
+        Student student = new Student();
+        student.setAge(22);
+        // 加入到工作内存中
+        session.insert(student);
+
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
+
+    // 测试 LHS 部分进阶条件元素 exists --> 对应的规则文件是 lhs-exists.drl
+    @Test
+    public void test23() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+
+        // 加入两个对象到工作内存中
+        session.insert(new Student());
+        session.insert(new Student());
+
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
+
 }
