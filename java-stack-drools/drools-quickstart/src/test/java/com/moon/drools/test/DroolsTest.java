@@ -539,4 +539,41 @@ public class DroolsTest {
         session.dispose();
     }
 
+    // 测试 LHS 部分进阶规则继承 extends --> 对应的规则文件是 lhs-extends.drl
+    @Test
+    public void test24() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+
+        Student student = new Student();
+        student.setAge(8);
+        // 加入到工作内存中
+        session.insert(student);
+
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
+
+    // 测试 RHS 部分进阶 --> 对应的规则文件是 rhs-drools.drl
+    @Test
+    public void test25() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
+
 }
