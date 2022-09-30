@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>java-stack-drools</artifactId>
+        <groupId>com.moon</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>drools-spring-web</artifactId>
+    <packaging>war</packaging>
+    <description>Spring web 整合 Drools 示例</description>
+
+    <dependencies>
+        <!--
+            spring 整合 drools 依赖包，已包含 spring-context、spring-tx、spring-core、spring-beans 等依赖
+            也包含了 drools-compiler 依赖
+        -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <!--注意：此处必须排除传递过来的依赖，否则会跟导入的Spring jar包产生冲突-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- spring mvc 依赖 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定端口 -->
+                    <port>8080</port>
+                    <!-- 请求路径 -->
+                    <path>/</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
