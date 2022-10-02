@@ -19,6 +19,8 @@
         <module>drools-spring-web</module>
         <module>drools-spring-boot</module>
         <module>drools-demo-calculation</module>
+        <module>drools-demo-creditcard-apply</module>
+        <module>drools-demo-insurance-check</module>
     </modules>
     <packaging>pom</packaging>
     <description>
