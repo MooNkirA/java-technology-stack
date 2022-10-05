@@ -1,0 +1,19 @@
+// 当前规则文件用于测试执行 enabled 属性
+package test.attributesenabled
+
+// 定义第一个规则
+rule "enabled_rule_1"
+    enabled false  // 指定当前规则是否可用，默认值为true。当前规则即使匹配也不会触发
+    when
+        eval(true) // 返回true，即当前规则匹配成功
+    then
+        System.out.println("规则：enabled_rule_1 触发了...");
+end
+
+// 定义第二个规则
+rule "enabled_rule_2"
+    when
+        eval(true)
+    then
+        System.out.println("规则：enabled_rule_2 触发了...");
+end

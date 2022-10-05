@@ -1,0 +1,19 @@
+// 当前规则文件用于测试LHS部分---exists
+package test.lhsexists
+import com.moon.drools.entity.Student
+
+// 编写规则，演示exists关键字用法
+rule "rule_lhs_exists"
+    when
+        exists Student()
+    then
+        System.out.println("规则：rule_lhs_exists 触发了...");
+end
+
+// 编写规则，演示exists关键字用法----没有使用exists关键字
+rule "rule_lhs_no_exists"
+    when
+        Student()
+    then
+        System.out.println("规则：rule_lhs_no_exists 触发了...");
+end

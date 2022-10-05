@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.6.RELEASE</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.moon</groupId>
+    <artifactId>java-stack-drools</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>drools-quickstart</module>
+        <module>drools-spring</module>
+        <module>drools-spring-web</module>
+        <module>drools-spring-boot</module>
+        <module>drools-demo-calculation</module>
+        <module>drools-demo-creditcard-apply</module>
+        <module>drools-demo-insurance-check</module>
+    </modules>
+    <packaging>pom</packaging>
+    <description>
+        drools 规则引擎使用示例
+    </description>
+
+    <properties>
+        <!-- 7.73.0.Final 版本无法使用？ -->
+        <drools.version>7.10.0.Final</drools.version>
+        <junit.version>4.13.2</junit.version>
+        <!-- 当前 spring boot 包含的 Spring 版本是 5.0.10.RELEASE -->
+        <!--<spring.version>5.0.5.RELEASE</spring.version>-->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-bom</artifactId>
+                <type>pom</type>
+                <version>${drools.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring 整合 drools 依赖包 -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-spring</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
