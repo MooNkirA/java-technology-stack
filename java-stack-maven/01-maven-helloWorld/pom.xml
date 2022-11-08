@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- project 标签：根标签，表示当前工程的配置、管理 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -8,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <!-- modelVersion 标签：从 Maven 2 开始固定是 4.0.0。表示当前 pom.xml 所采用的标签结构 -->
     <modelVersion>4.0.0</modelVersion>
     <!-- 项目名称，定义为组织名+项目名，类似包名 -->
     <groupId>com.moon</groupId>
@@ -17,11 +19,17 @@
     <version>0.0.1-SNAPSHOT</version>
     <!--
         <packaging>：打包类型
-        jar：执行package会打成jar包
-        war：执行package会打成war包
-        pom ：用于maven工程的继承，通常父工程设置为 pom
+        jar：表示此工程是一个 Java 工程。执行 package 命令会打成 jar 包，默认值
+        war：表示此工程是一个 Web 工程。执行 package 命令会打成 war 包
+        pom：用于 maven 工程的继承，通常父工程设置为 pom
      -->
     <packaging>war</packaging>
+
+    <!-- maven 工程使用的属性 -->
+    <properties>
+        <!-- 示例：工程构建过程中读取源码时使用的字符集 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <!-- jdk编译版本1.5，在pom.xml中添加插件 -->
     <!-- 添加项目jdk编译插件 -->
@@ -56,9 +64,9 @@
         </plugins>
     </build>
 
-    <!-- 在Dependencies视图添加后生成的内容 -->
-    <!-- 添加servlet-api，jsp-api -->
+    <!-- 在 dependencies 标签中配置工程相关的依赖，可以包含多个 dependency 子标签 -->
     <dependencies>
+        <!-- dependency 标签指定一个具体的依赖信息 -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -73,12 +81,11 @@
         </dependency>
 
         <!-- 增加依赖，测试从私服下载组件 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.moon</groupId>
             <artifactId>testtest</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
+        </dependency>-->
     </dependencies>
 
 </project>
