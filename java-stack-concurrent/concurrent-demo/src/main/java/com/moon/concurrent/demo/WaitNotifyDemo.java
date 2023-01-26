@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * @date 2021-12-15 16:42
  * @description
  */
-public class WaitNotify {
+public class WaitNotifyDemo {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(WaitNotify.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(WaitNotifyDemo.class);
 
     private final static Object lock = new Object();
 
