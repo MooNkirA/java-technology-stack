@@ -1,0 +1,21 @@
+// 当前规则文件用于测试 lock-on-active 属性防止规则执行时死循环问题
+package test.attributeslockonactive
+import com.moon.drools.entity.Student
+
+rule "rule_noloop"
+    no-loop true // 使用 no-loop 解决死循环问题，但不能解决其他规则引起的死循环
+    when
+        $s:Student(age == 50)
+    then
+        update($s); // 调用update方法会导致相关规则重新匹配
+        System.out.println("规则：rule_noloop 触发了...");
+end
+
+rule "lock_on_active"
+    lock-on-active true // 使用 lock-on-active 解决包含自身或者其他规则所引起的死循环问题
+    when
+        $s:Student(age == 50)
+    then
+        update($s); // 调用update方法会导致相关规则重新匹配
+        System.out.println("规则：lock_on_active 触发了...");
+end

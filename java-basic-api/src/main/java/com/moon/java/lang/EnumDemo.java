@@ -1,5 +1,7 @@
 package com.moon.java.lang;
 
+import java.math.BigDecimal;
+
 /**
  * Enum 类使用的两条建议
  * <p>
@@ -12,7 +14,6 @@ package com.moon.java.lang;
  * @description
  */
 public class EnumDemo {
-
 
     // 普通枚举
     enum ColorEnum {
@@ -32,5 +33,33 @@ public class EnumDemo {
         public int getSeq() {
             return seq;
         }
+    }
+
+    // 带抽象方法枚举，示例中的构造方法为类型的中文名称，在定义枚举值时需要实现抽象方法
+    enum PayTypeEnum {
+        WX_PAY("微信支付") {
+            @Override
+            public void doPay(BigDecimal money) {
+                System.out.println("微信支付: " + money);
+            }
+        }, ALI_PAY("支付宝支付") {
+            @Override
+            public void doPay(BigDecimal money) {
+                System.out.println("支付宝支付: " + money);
+            }
+        };
+
+        private final String name;
+
+        PayTypeEnum(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        // 定义抽象方法
+        public abstract void doPay(BigDecimal money);
     }
 }

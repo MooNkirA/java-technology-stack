@@ -10,7 +10,7 @@ import java.util.concurrent.locks.LockSupport;
  * @date 2021-12-16 16:02
  * @description
  */
-public class ParkUnpark {
+public class ParkUnparkDemo {
 
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(() -> {

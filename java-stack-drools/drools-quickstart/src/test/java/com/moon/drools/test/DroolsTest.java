@@ -576,4 +576,24 @@ public class DroolsTest {
         session.dispose();
     }
 
+    // 测试规则属性 lock-on-active  --> 对应的规则文件是 attributes-lockonactive.drl
+    @Test
+    public void test26() {
+        // 获取 KieServices
+        KieServices kieServices = KieServices.Factory.get();
+        // 获得 KieContainer（容器）对象
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+        // 从 KieContainer（容器）对象中获取会话对象，用于和规则引擎交互
+        KieSession session = kieContainer.newKieSession();
+        // 构造Fact对象（事实对象）
+        Student student = new Student();
+        student.setAge(50);
+        // 将数据提供给规则引擎（放入工作内存中），规则引擎会根据提供的数据进行规则匹配
+        session.insert(student);
+
+        // 激活规则，由Drools框架自动进行规则匹配，如果规则匹配成功，则执行当前规则
+        session.fireAllRules();
+        // 关闭会话
+        session.dispose();
+    }
 }
