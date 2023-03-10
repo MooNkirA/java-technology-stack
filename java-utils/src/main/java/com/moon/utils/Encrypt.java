@@ -1,4 +1,4 @@
-package com.moon.sample.utils;
+package com.moon.utils;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
 

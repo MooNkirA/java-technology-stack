@@ -1,4 +1,4 @@
-package com.moon.sample.utils;
+package com.moon.utils;
 
 import javax.mail.Address;
 import javax.mail.Session;

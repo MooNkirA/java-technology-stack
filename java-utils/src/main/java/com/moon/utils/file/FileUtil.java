@@ -1,4 +1,4 @@
-package com.moon.sample.utils.file;
+package com.moon.utils.file;
 
 import com.moon.sample.utils.FormatStyle;
 import com.moon.sample.utils.UtilFuns;

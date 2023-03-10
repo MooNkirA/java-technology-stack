@@ -1,4 +1,4 @@
-package com.moon.sample.utils;
+package com.moon.utils;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;

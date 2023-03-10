@@ -1,4 +1,4 @@
-package com.moon.sample.utils;
+package com.moon.utils;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;

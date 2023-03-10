@@ -1,4 +1,4 @@
-package com.moon.sample.utils;
+package com.moon.utils;
 
 
 // 这是一个数数学计算的class 缩略图生成的时候需要用到。

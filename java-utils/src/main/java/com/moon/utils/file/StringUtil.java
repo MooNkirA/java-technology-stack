@@ -1,4 +1,4 @@
-package com.moon.sample.utils.file;
+package com.moon.utils.file;
 
 import java.security.MessageDigest;
 
