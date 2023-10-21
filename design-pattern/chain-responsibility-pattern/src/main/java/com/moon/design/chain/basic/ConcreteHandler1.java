@@ -1,4 +1,4 @@
-package com.moon.design.chain;
+package com.moon.design.chain.basic;
 
 /**
  * 具体处理者角色1

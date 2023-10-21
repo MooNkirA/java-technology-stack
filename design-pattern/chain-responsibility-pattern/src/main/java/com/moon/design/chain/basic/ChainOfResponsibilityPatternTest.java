@@ -1,4 +1,4 @@
-package com.moon.design.chain;
+package com.moon.design.chain.basic;
 
 /**
  * 职责链模式测试
