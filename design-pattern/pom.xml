@@ -20,6 +20,7 @@
         <module>template-method-pattern</module>
         <module>adapter-pattern</module>
         <module>chain-responsibility-pattern</module>
+        <module>factory-pattern</module>
     </modules>
 
     <build>
