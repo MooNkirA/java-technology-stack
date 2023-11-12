@@ -1,5 +1,6 @@
 package com.moon.java.util.concurrent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -7,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 通过 Executors 工具类获取不同类型的类型线程池示例（ExecutorService、ScheduledExecutorService 等）
@@ -16,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022-12-25 18:06
  * @description
  */
+@Slf4j
 public class ExecutorsDemo {
 
     // newCachedThreadPool 方法获取线程池测试
@@ -63,11 +66,13 @@ public class ExecutorsDemo {
     public void newFixedThreadPoolTest2() {
         // 1.使用工厂类获取线程池对象
         ExecutorService es = Executors.newFixedThreadPool(3, new ThreadFactory() {
-            int n = 1;
+            // int n = 1;
+            private AtomicInteger t = new AtomicInteger(1);
 
             @Override
             public Thread newThread(Runnable r) {
-                return new Thread(r, "自定义的线程名称" + n++);
+                // return new Thread(r, "自定义的线程名称" + n++);
+                return new Thread(r, "自定义的线程名称" + t.getAndIncrement());
             }
         });
         // 2.提交任务
@@ -103,6 +108,20 @@ public class ExecutorsDemo {
         for (int i = 1; i <= 10; i++) {
             es.submit(new MyRunnable(i));
         }
+    }
+
+    // newSingleThreadExecutor 方法模拟异常处理
+    @Test
+    public void NewSingleThreadExecutorTest3() throws InterruptedException {
+        ExecutorService pool = Executors.newSingleThreadExecutor();
+        pool.execute(() -> {
+            log.debug("1");
+            int i = 1 / 0; // 模拟异常导致线程终止，线程池会创建新线程，保证池的正常工作
+        });
+
+        pool.execute(() -> log.debug("2"));
+        pool.execute(() -> log.debug("3"));
+        Thread.sleep(2000);
     }
 
     // newScheduledThreadPool 方法获取定时任务线程池，schedule 方法功能测试
@@ -158,7 +177,6 @@ public class ExecutorsDemo {
         System.out.println("main thread is over");
         Thread.sleep(20000);
     }
-
 
 }
 
